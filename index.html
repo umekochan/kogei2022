@@ -7,24 +7,45 @@
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.4.0/fabric.min.js"></script>
     <style>
-        body {margin:0;}
+        body {margin:0 auto; max-width: 1000px;}
     </style>
 </head>
 <body>
     <div class="canvas__wrap">
         <canvas id="Canvas" class="canvas"></canvas>
     </div>
+    <div class="upload"><input type="file" name="file" id="file"></div>
     <div id="result"></div>
     <script>
         //fabricをロード
         const canvas = new fabric.Canvas('Canvas');
-        canvas.selection = false;
-        canvas.isDrawingMode = true;
+        canvas.selection = true;
+        canvas.isDrawingMode = false;
 
+        //画像を読み込む
+        var icon;
+        document.getElementById('file').addEventListener("change", function (e) {
+            let file = e.target.files[0];
+            let reader = new FileReader();
+            reader.onload = function (f) {
+                let data = f.target.result;                    
+                fabric.Image.fromURL(data, function (img) {
+                    let oImg = img.set({left: 0}).scale(0.33);
+                    canvas.add(oImg);
+                    let a = canvas.setActiveObject(oImg);
+                    // let dataURL = canvas.toDataURL({format: 'png', quality: 0.8});
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+        
+
+        //画面サイズ似合わせる
         window.addEventListener('resize', resizeCanvas, false);
         function resizeCanvas() {
+            let inWidth = window.innerWidth < 800 ? window.innerWidth: 800;
             canvas.setHeight(window.innerHeight);
-            canvas.setWidth(window.innerWidth);
+            canvas.setWidth(inWidth);
             canvas.renderAll();
         }
         resizeCanvas();
