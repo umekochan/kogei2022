@@ -22,10 +22,10 @@
         </div>
         <div class="row">
             <div class="bgColor col-5 mb-3"><input type="color" id="BgColorPicker"><label for="BgColorPicker">テキスト背景色</label></div>
-            <div class="bgTransparent form-check form-switch col-7 mb-3"><input type="checkbox" role="switch" class="form-check-input" id="BgTransparent" checked="checked"><label for="BgTransparent">背景色無し</label></div>
+            <div class="bgTransparent form-check form-switch col-7 mb-3"><input type="checkbox" role="switch" class="form-check-input" id="BgTransparent" checked="checked"><label for="BgTransparent">背景色無し（透明）</label></div>
         </div>
         <div class="row">
-            <div class="addTextbox mb-3"><button type="button" class="addTextbox-btn btn btn-outline-primary" id="AddTextboxBtn">テキストの追加</button></div>
+            <div class="addTextbox mb-3"><button type="button" class="addTextbox-btn btn btn-outline-primary" id="AddTextboxBtn">テキストボックスを追加</button></div>
         </div>
         <div class="row">
             <div class="upload input-group mb-3"><label class="input-group-text" for="file">画像追加</label><input class="form-control" type="file" name="file" id="file"></div>
@@ -73,6 +73,11 @@
             };
             reader.readAsDataURL(file);
         });
+
+        //背景色を変更したら動的に背景色を有効にする
+        bgColorPicler.onchange = (e) => {
+            bgTransparent.checked = false;
+        }
 
         //文字を追加できる
         function createTextBox(text){
