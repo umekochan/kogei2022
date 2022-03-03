@@ -72,13 +72,18 @@
         //お絵かきモードのON/OFF
         let drawCheck = document.getElementById('DrawMode');
         drawCheck.addEventListener("change", function(e) {
-            canvas.isDrawingMode = drawCheck.checked;
+            canvas.isDrawingMode = this.checked;
         });
 
         //お絵かきモードのペンの太さ
         let penWidth = document.getElementById('PenWidth');
         penWidth.addEventListener("change", function(e) {
             canvas.freeDrawingBrush.width = parseInt(penWidth.value, 10) || 1;
+        });
+
+        //お絵かきモードのカラーを描画色に連動
+        colorPicker.addEventListener("change", function(e) {
+            canvas.freeDrawingBrush.color = this.value;
         });
 
         //背景設定
