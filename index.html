@@ -15,6 +15,7 @@
         <canvas id="Canvas" class="canvas"></canvas>
     </div>
     <div class="upload"><input type="file" name="file" id="file"></div>
+    <div class="addTextbox"><button type="button" class="addTextbox-btn" id="AddTextboxBtn">addTextBox</button></div>
     <div id="result"></div>
     <script>
         //fabricをロード
@@ -38,7 +39,17 @@
             };
             reader.readAsDataURL(file);
         });
-        
+
+        //文字を追加できる
+        function createTextBox(text='textbox'){
+            let textbox = new fabric.Textbox(text);
+            canvas.add(textbox);
+            canvas.centerObject(textbox);
+        }
+        createTextBox('テスト');
+        document.getElementById('AddTextboxBtn').addEventListener("click", function(e) {
+            createTextBox('add');
+        });
 
         //画面サイズ似合わせる
         window.addEventListener('resize', resizeCanvas, false);
