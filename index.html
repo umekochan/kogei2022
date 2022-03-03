@@ -14,9 +14,11 @@
     <div class="canvas__wrap">
         <canvas id="Canvas" class="canvas"></canvas>
     </div>
-    <div class="color"><input type="color" id="ColorPicker">色選択</div>
+    <div class="color"><input type="color" id="ColorPicker">描画色</div>
+    <div class="bgColor"><input type="color" id="BgColorPicker">テキスト背景色</div>
+    <div class="bgTransparent"><input type="checkbox" id="BgTransparent" checked="checked"><label for="BgTransparent">背景色無し</label></div>
     <div class="upload"><input type="file" name="file" id="file"></div>
-    <div class="addTextbox"><button type="button" class="addTextbox-btn" id="AddTextboxBtn">addTextBox</button></div>
+    <div class="addTextbox"><button type="button" class="addTextbox-btn" id="AddTextboxBtn">テキストの追加</button></div>
     <div class="draw"><input type="checkbox" name="drawMode-check" id="DrawMode"><label for="DrawMode">落描きできるようにする</label></div>
     <div class="penWidth"><input type="range" id="PenWidth" value="1" min="1" max="100"><label for="PenWidth">ペンの太さ</label></div>
     <div id="result"></div>
@@ -29,8 +31,12 @@
         canvas.selection = true;
         //初期値：落描き無効
         canvas.isDrawingMode = false;
-        //カラーピッカーを取得
+        //描画色カラーピッカーを取得
         let colorPicker = document.getElementById('ColorPicker');
+        //背景の有効無効
+        let bgTransparent = document.getElementById('BgTransparent');
+        //背景色カラーピッカーを取得
+        let bgColorPicler = document.getElementById('BgColorPicker');
 
         //画像を読み込む
         document.getElementById('file').addEventListener("change", function (e) {
@@ -50,7 +56,8 @@
 
         //文字を追加できる
         function createTextBox(text){
-            let textbox = new fabric.Text(text,{fill:colorPicker.value});
+            let bg = bgTransparent.checked ? null : bgColorPicler.value;
+            let textbox = new fabric.Text(text,{fill: colorPicker.value, backgroundColor: bg});
             canvas.add(textbox);
             canvas.centerObject(textbox);
         }
@@ -78,7 +85,7 @@
         //お絵かきモードのペンの太さ
         let penWidth = document.getElementById('PenWidth');
         penWidth.addEventListener("change", function(e) {
-            canvas.freeDrawingBrush.width = parseInt(penWidth.value, 10) || 1;
+            canvas.freeDrawingBrush.width = parseInt(this.value, 10) || 1;
         });
 
         //お絵かきモードのカラーを描画色に連動
