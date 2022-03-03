@@ -77,7 +77,7 @@
         //文字を追加できる
         function createTextBox(text){
             let bg = bgTransparent.checked ? null : bgColorPicler.value;
-            let textbox = new fabric.Text(text,{fill: colorPicker.value, backgroundColor: bg});
+            let textbox = new fabric.Textbox(text,{fill: colorPicker.value, backgroundColor: bg});
             canvas.add(textbox);
             canvas.centerObject(textbox);
         }
