@@ -22,6 +22,7 @@
     <div class="draw"><input type="checkbox" name="drawMode-check" id="DrawMode"><label for="DrawMode">落描きできるようにする</label></div>
     <div class="penWidth"><input type="range" id="PenWidth" value="1" min="1" max="100"><label for="PenWidth">ペンの太さ</label></div>
     <div class="delete"><button type="button" id="Delete">選択したやつを消す</button></div>
+    <div class="download"><button type="button" id="Download">画像を保存</button></div>
     <div id="result"></div>
     <script>
         //画面サイズの幅上限
@@ -101,6 +102,14 @@
                 canvas.remove(canvas.getActiveObject());
             }
         });
+
+        //画像ダウンロード
+        document.getElementById('Download').onclick = (e) => {
+            let link = document.createElement("a");
+            link.href = canvas.toDataURL("image/png");
+            link.download = "kogei_Profile.png";
+            link.click();
+        }
 
         //背景設定
         (() => {
