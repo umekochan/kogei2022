@@ -20,6 +20,8 @@
     <div class="draw"><input type="checkbox" name="drawMode-check" id="DrawMode"><label for="DrawMode">落描きできるようにする</label></div>
     <div id="result"></div>
     <script>
+        //画面サイズの幅上限
+        const widthMax = 640;
         //fabricをロード
         const canvas = new fabric.Canvas('Canvas');
         //初期値：選択可能
@@ -58,7 +60,7 @@
         //画面サイズ似合わせる
         window.addEventListener('resize', resizeCanvas, false);
         function resizeCanvas() {
-            let inWidth = window.innerWidth < 800 ? window.innerWidth: 800;
+            let inWidth = window.innerWidth < widthMax ? window.innerWidth: widthMax;
             //背景画像の比率に合わせて高さを設定
             canvas.setHeight(inWidth * 1.42);
             canvas.setWidth(inWidth);
