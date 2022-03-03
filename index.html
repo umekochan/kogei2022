@@ -33,7 +33,7 @@
         </div>
         <div class="row">
             <div class="draw mb-3 col-4 form-check form-switch"><input type="checkbox" role="switch" class="form-check-input" name="drawMode-check" id="DrawMode"><label for="DrawMode">落描きする</label></div>
-            <div class="penWidth mb-3 col-8 row"><input type="range" class="form-range col" id="PenWidth" value="1" min="1" max="100"><label for="PenWidth" class="col">ペンの太さ</label></div>            
+            <div class="penWidth mb-3 col-8 row"><input type="range" class="form-range col" id="PenWidth" value="1" min="1" max="50"><label for="PenWidth" class="col">ペンの太さ<span id="PenWidthValue">1px</span></label></div>            
         </div>
         <div class="row">
             <div class="delete mb-3"><button type="button" id="Delete" class="btn btn-secondary">選択したやつを消す</button></div>
@@ -115,6 +115,7 @@
         let penWidth = document.getElementById('PenWidth');
         penWidth.addEventListener("change", function(e) {
             canvas.freeDrawingBrush.width = parseInt(this.value, 10) || 1;
+            document.getElementById('PenWidthValue').innerHTML = this.value + "px";
         });
 
         //お絵かきモードのカラーを描画色に連動
