@@ -27,7 +27,6 @@
         canvas.isDrawingMode = false;
 
         //画像を読み込む
-        var icon;
         document.getElementById('file').addEventListener("change", function (e) {
             let file = e.target.files[0];
             let reader = new FileReader();
@@ -57,7 +56,8 @@
         window.addEventListener('resize', resizeCanvas, false);
         function resizeCanvas() {
             let inWidth = window.innerWidth < 800 ? window.innerWidth: 800;
-            canvas.setHeight(window.innerHeight);
+            //背景画像の比率に合わせて高さを設定
+            canvas.setHeight(inWidth * 1.42);
             canvas.setWidth(inWidth);
             canvas.renderAll();
         }
@@ -74,7 +74,6 @@
             fabric.Image.fromURL('sheet2022.png', function(bgImg) {
                 bgImg.scaleToWidth(canvas.width);
                 //bgImg.scaleToHeight(canvas.height);
-                console.log(bgImg.scaleX);
                 canvas.setBackgroundImage(bgImg, canvas.renderAll.bind(canvas), {
                     left: (canvas.width - bgImg.width * bgImg.scaleX) / 2
                 });
