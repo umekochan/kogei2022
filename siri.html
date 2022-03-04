@@ -20,19 +20,19 @@
     <div class="container">
         <div class="row">
             <div class="col-3">
-                <input type="radio" name="colors" id="color-magenta" class="btn-check" autocomplete="off" checked>
+                <input type="radio" name="colors" id="color-magenta" class="btn-check" autocomplete="off" value="magenta" checked>
                 <label for="color-magenta" class="btn btn-outline-secondary" style="color: #ff00ff;">■</label>
             </div>
             <div class="col-3">
-                <input type="radio" name="colors" id="color-green" class="btn-check" autocomplete="off">
+                <input type="radio" name="colors" id="color-green" class="btn-check" autocomplete="off" value="green">
                 <label for="color-green" class="btn btn-outline-secondary" style="color: #15ff00;">■</label>    
             </div>
             <div class="col-3">
-                <input type="radio" name="colors" id="color-blue" class="btn-check" autocomplete="off">
+                <input type="radio" name="colors" id="color-blue" class="btn-check" autocomplete="off" value="blue">
                 <label for="color-blue" class="btn btn-outline-secondary" style="color: #00fff2;">■</label>
             </div>
             <div class="col-3">
-                <input type="radio" name="colors" id="color-yellow" class="btn-check" autocomplete="off">
+                <input type="radio" name="colors" id="color-yellow" class="btn-check" autocomplete="off" value="yellow">
                 <label for="color-yellow" class="btn btn-outline-secondary" style="color: #ffff64;">■</label>
             </div>
         </div>
@@ -53,13 +53,27 @@
         const shadowWidth = 13;
         //fabricをロード
         const canvas = new fabric.Canvas('Canvas');
+        //色設定
+        const colorPalette = {
+            magenta: {pen: "#ffb5cc", shadow: "#ff00ff"},
+            green: {pen: "#c1ffc5", shadow: "#15ff00"},
+            blue: {pen: "#00fff5", shadow: "#0099ff"},
+            yellow: {pen: "#ffff66", shadow: "#ffd500"},
+        };
         //初期値：選択可能
         canvas.selection = false;
         //初期値：落描き無効
         canvas.isDrawingMode = true;
 
+        canvas.freeDrawingBrush.color = "#000000";
         canvas.freeDrawingBrush.width = penWidth;
-        canvas.freeDrawingBrush.shadow.blur = shadowWidth;
+        canvas.freeDrawingBrush.shadow = new fabric.Shadow({
+                blur: shadowWidth,
+                offsetX: 0,
+                offsetY: 0,
+                affectStroke: true,
+                color: "#000000",
+            });
 
         //文字を追加できる
         function createTextBox(text){
@@ -68,6 +82,26 @@
             canvas.add(textbox);
             canvas.centerObject(textbox);
         }
+
+        //ラジオボタンを操作
+        let colorsBtn = document.getElementsByName('colors');
+        function setBrushColor() {
+            //null回避のために初期値を設定
+            let setColor = "magenta";
+            for(let i = 0; i < colorsBtn.length; i++){
+                if(colorsBtn.item(i).checked){
+                    setColor = colorsBtn.item(i).value;
+                }
+                //ラジオボタンをクリックした時
+                colorsBtn.item(i).onclick = (e)=>{setBrushColor();};
+            }
+            //ペンカラーの変更
+            canvas.freeDrawingBrush.color = colorPalette[setColor].pen;
+            //シャドウカラーの変更
+            canvas.freeDrawingBrush.shadow.color = colorPalette[setColor].shadow;
+        }
+        setBrushColor();
+        // window.onload = (e) => {setBrushColor();}
 
         //画面サイズ似合わせる
         window.addEventListener('resize', resizeCanvas, false);
