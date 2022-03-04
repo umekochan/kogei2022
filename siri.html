@@ -51,7 +51,7 @@
         </div>
         <div class="row">
             <div class="download mb-3 col-9"><button type="button" id="Download" class="btn btn-primary">画像をダウンロード</button></div>
-            <div class="clear col-3"><button class="btn btn-secondary" id="Clear" type="button">クリア</button></div>
+            <!-- <div class="clear col-3"><button class="btn btn-secondary" id="Clear" type="button">クリア</button></div> -->
         </div>
         <footer class="row">
             <small class="fs-6 text-center">created:<a href="https://twitter.com/UmeBC" >@umebc</a></small>
@@ -87,9 +87,6 @@
                 affectStroke: true,
                 color: "#000000",
             });
-
-        //クリアボタン
-        document.getElementById('Clear').onclick = (e) => {canvas.clear();}
 
         //ラジオボタンを操作
         let colorsBtn = document.getElementsByName('colors');
@@ -131,7 +128,7 @@
         }
 
         //背景設定
-        (() => {
+        let setBackground = () => {
             fabric.Image.fromURL('sirisiri13.jpg', function(bgImg) {
                 bgImg.scaleToWidth(canvas.width *0.98);
                 //bgImg.scaleToHeight(canvas.height);
@@ -139,7 +136,11 @@
                     left: (canvas.width - bgImg.width * bgImg.scaleX) / 2, top: 0
                 });
 	        });
-        })();
+        };
+        setBackground();
+
+        //クリアボタン
+        document.getElementById('Clear').onclick = (e) => {canvas.clear(); setBackground();}
     </script>
 </body>
 </html>
