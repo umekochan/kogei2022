@@ -47,12 +47,19 @@
     <script>
         //画面サイズの幅上限
         const widthMax = 640;
+        //ペン太さ
+        const penWidth = 8;
+        //シャドウ幅
+        const shadowWidth = 13;
         //fabricをロード
         const canvas = new fabric.Canvas('Canvas');
         //初期値：選択可能
         canvas.selection = false;
         //初期値：落描き無効
         canvas.isDrawingMode = true;
+
+        canvas.freeDrawingBrush.width = penWidth;
+        canvas.freeDrawingBrush.shadow.blur = shadowWidth;
 
         //文字を追加できる
         function createTextBox(text){
