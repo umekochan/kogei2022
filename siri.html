@@ -45,11 +45,10 @@
         <div class="row">
             <div class="download mb-3"><button type="button" id="Download" class="btn btn-primary">画像をダウンロード</button></div>
         </div>
+        <footer class="row">
+            <small class="fs-6 text-center">created:<a href="https://twitter.com/UmeBC" >@umebc</a></small>
+        </footer>
     </div>
-    <footer class="row">
-        <small class="fs-6 text-center">created:<a href="https://twitter.com/UmeBC" >@umebc</a></small>
-    </footer>
-    <div id="result"></div>
     <script>
         //画面サイズの幅上限
         const widthMax = 640;
@@ -112,7 +111,7 @@
         //画面サイズ似合わせる
         window.addEventListener('resize', resizeCanvas, false);
         function resizeCanvas() {
-            let inWidth = window.innerWidth < widthMax ? window.innerWidth: widthMax;
+            let inWidth = document.documentElement.clientWidth < widthMax ? document.documentElement.clientWidth: widthMax;
             //背景画像の比率に合わせて高さを設定
             canvas.setHeight(inWidth * 1.364);
             canvas.setWidth(inWidth);
