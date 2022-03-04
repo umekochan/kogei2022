@@ -88,13 +88,6 @@
                 color: "#000000",
             });
 
-        //文字を追加できる
-        function createTextBox(text){
-            let bg = bgTransparent.checked ? null : bgColorPicler.value;
-            let textbox = new fabric.Textbox(text,{fill: colorPicker.value, backgroundColor: bg, textAlign: "center"});
-            canvas.add(textbox);
-            canvas.centerObject(textbox);
-        }
         //クリアボタン
         document.getElementById('Clear').onclick = (e) => {canvas.clear();}
 
