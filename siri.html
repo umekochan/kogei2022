@@ -19,7 +19,22 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="upload input-group mb-3"><label class="input-group-text" for="file">画像追加</label><input class="form-control" type="file" name="file" id="file"></div>
+            <div class="col-3">
+                <input type="radio" name="colors" id="color-magenta" class="btn-check" autocomplete="off" checked>
+                <label for="color-magenta" class="btn btn-outline-secondary" style="color: #ff00ff;">■</label>
+            </div>
+            <div class="col-3">
+                <input type="radio" name="colors" id="color-green" class="btn-check" autocomplete="off">
+                <label for="color-green" class="btn btn-outline-secondary" style="color: #15ff00;">■</label>    
+            </div>
+            <div class="col-3">
+                <input type="radio" name="colors" id="color-blue" class="btn-check" autocomplete="off">
+                <label for="color-blue" class="btn btn-outline-secondary" style="color: #00fff2;">■</label>
+            </div>
+            <div class="col-3">
+                <input type="radio" name="colors" id="color-yellow" class="btn-check" autocomplete="off">
+                <label for="color-yellow" class="btn btn-outline-secondary" style="color: #ffff64;">■</label>
+            </div>
         </div>
         <div class="row">
             <div class="download mb-3"><button type="button" id="Download" class="btn btn-primary">画像をダウンロード</button></div>
@@ -35,25 +50,9 @@
         //fabricをロード
         const canvas = new fabric.Canvas('Canvas');
         //初期値：選択可能
-        canvas.selection = true;
+        canvas.selection = false;
         //初期値：落描き無効
-        canvas.isDrawingMode = false;
-
-        //画像を読み込む
-        document.getElementById('file').onchange = (e) => {
-            let file = e.target.files[0];
-            let reader = new FileReader();
-            reader.onload = (f) => {
-                let data = f.target.result;                    
-                fabric.Image.fromURL(data, function (img) {
-                    let oImg = img.set({left: 0}).scale(0.33);
-                    canvas.add(oImg);
-                    let a = canvas.setActiveObject(oImg);
-                    // let dataURL = canvas.toDataURL({format: 'png', quality: 0.8});
-                });
-            }
-            reader.readAsDataURL(file);
-        }
+        canvas.isDrawingMode = true;
 
         //文字を追加できる
         function createTextBox(text){
@@ -82,37 +81,16 @@
             link.click();
         }
 
-        var artBoard = new fabric.Rect({
-        stroke: '#000',
-        strokeWidth:1,
-        fill: 'rgba(0,255,255,1)',
-        width: canvas.width  - 40,
-        height: canvas.height  - 40,
-        selectable:false,
-        shadow : {
-                color: 'rgba(0,0,0,0.5)',
-                blur: 20,
-                offsetX: 0,
-                offsetY: 10,
-                opacity: 0.6,
-                fillShadow: true,
-            }
-        });
-
-        canvas.centerObject(artBoard);
-        canvas.setBackgroundImage(artBoard);
-
         //背景設定
         (() => {
             fabric.Image.fromURL('sirisiri13.jpg', function(bgImg) {
-                bgImg.scaleToWidth(canvas.width * 0.86);
+                bgImg.scaleToWidth(canvas.width *0.98);
                 //bgImg.scaleToHeight(canvas.height);
                 canvas.setBackgroundImage(bgImg, canvas.renderAll.bind(canvas), {
-                    left: (canvas.width - bgImg.width * bgImg.scaleX) / 2, top: 20
+                    left: (canvas.width - bgImg.width * bgImg.scaleX) / 2, top: 0
                 });
 	        });
         })();
-        // canvas.renderAll();
     </script>
 </body>
 </html>
