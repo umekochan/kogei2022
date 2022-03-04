@@ -11,10 +11,17 @@
         body,div,p,h1,h2,h3,h4,h5,h6,ul,ol,li,a,dt,dl,dd {box-sizing: border-box;}
         body {margin:0 auto; max-width: 1000px;}
         .tools {max-width: 640px ;}
+        .title {
+            padding: .3em;
+            background: repeating-linear-gradient(-45deg, #3949AB, #3949AB 5px,#5C6BC0 5px, #5C6BC0 10px);
+            color: #fff2a7;
+            text-align: center;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.3);/*文字を読みやすくするために影を追加*/
+        }
     </style>
 </head>
 <body>
-    <h1>ケツ★チェキ</h1>
+    <h1 class="fs-2 title">ケツ★チェキ</h1>
     <div class="canvas__wrap">
         <canvas id="Canvas" class="canvas"></canvas>
     </div>
@@ -24,7 +31,7 @@
                 <p>ペンの色</p>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-3">
                 <input type="radio" name="colors" id="color-magenta" class="btn-check" autocomplete="off" value="magenta" checked>
                 <label for="color-magenta" class="btn btn-outline-secondary" style="color: #ff00ff;">■</label>
