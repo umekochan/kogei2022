@@ -4,53 +4,224 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KOGEI自己紹介2022</title>
+    <title>KOGEI自己紹介2024</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.4.0/fabric.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
     <style>
-        body,div,p,h1,h2,h3,h4,h5,h6,ul,ol,li,a,dt,dl,dd {box-sizing: border-box;}
-        body {margin:0 auto; max-width: 1000px;}
-        .tools {max-width: 640px ;}
+        body,div,p,h1,h2,h3,h4,h5,h6,ul,ol,li,a,dt,dl,dd {box-sizing: border-box;margin: 0;}
+        :root {
+            --opener-width: 1.2rem;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            display: flex;
+            max-width: 640px;
+            position: relative;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        footer {
+            width: 100%;
+            text-align: center;
+        }
+        small {
+            font-size: .625rem;
+        }
+        .sidemenu {
+            position: absolute;
+            top:10px;
+            left: calc(100% - var(--opener-width));
+            transform: translateX(0);
+            font-size: .8rem;
+            width: calc(100% - var(--opener-width));
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            transition: all .3s ease;
+            background-color: rgba(255,255,255,.5);
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            padding-left: var(--opener-width);
+            min-height: 400px;
+            max-width: 480px;
+
+            &::after {
+                content: "▼";
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 50%;
+                width: var(--opener-width);
+                transition: all .5s ease .2s;
+                color: white;
+                font-size: 1.4rem;
+                transform: translateY(-50%) rotateZ(90deg) scaleY(50%);
+            }
+            &.open {
+                transition: all .3s ease;
+                /* left: var(--opener-width); */
+                transform: translateX(calc(-100% + var(--opener-width)));
+            }
+        }
+        .userinfo {
+            background-color: white;
+            width: 100%;
+        }
+        .row {
+            display: flex;
+            button {
+                font-size: .85rem;
+            }
+            :is([for="file"], [type="file"]){
+                font-size: .8rem;
+            }
+        }
+        .colors {
+            display: flex;
+            flex-wrap: nowrap;
+            & > div {
+                flex-shrink: 1;
+            }
+        }
+        .controller {
+            margin-top: -1rem;
+            font-size: .85rem;
+        }
+        .tools__list {
+            padding: 0 .75rem;
+            background-color: white;
+        }
+        .button__wrapper {
+            display: flex;
+            justify-content: space-between;
+        }
+        .userinfo {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            & > div {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                margin: .5rem 0;
+                p {
+                    flex-shrink: 0;
+                    flex-basis: 100%;
+                    font-size: 1.25rem;
+                    border-left: solid .75rem cornflowerblue;
+                    padding-left: .5rem;
+                    line-height: 1.25rem;
+                    margin-bottom: .75rem;
+                }
+            }
+            label {
+                    
+            }
+            input {
+                &[type="radio"] {
+                    margin: 0 .25rem;
+                }
+                &[value="a"] {
+                    accent-color: green;
+                }
+                &[value="m"] {
+                    accent-color: purple;
+                }
+                &[value="i"] {
+                    accent-color: red;
+                }
+                &[value="g"] {
+                    accent-color: goldenrod;
+                }
+                &[value="d"] {
+                    accent-color: steelblue;
+                }
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="canvas__wrap">
-        <canvas id="Canvas" class="canvas"></canvas>
+    <div class="hidden preload" style="position: fixed; top: 0; left: 0; visibility: hidden; height: 0; width: 0;">
+        <p style="font-family: 'DotGothic16';">.</p>
     </div>
-    <div class="container tools">
-        <div class="row">
-            <div class="color col-12 mb-3"><input type="color" id="ColorPicker"><label for="ColorPicker">描画色</label></div>
+    <main class="main">
+        <div class="canvas__wrapper">
+            <canvas id="Canvas" class="canvas"></canvas>
         </div>
-        <div class="row">
-            <div class="bgColor col-5 mb-3"><input type="color" id="BgColorPicker"><label for="BgColorPicker">テキスト背景色</label></div>
-            <div class="bgTransparent form-check form-switch col-7 mb-3"><input type="checkbox" role="switch" class="form-check-input" id="BgTransparent" checked="checked"><label for="BgTransparent">背景色無し（透明）</label></div>
+        <div class="sidemenu">
+            <div class="userinfo">
+                <div class="course">
+                    <p>課程</p>
+                    <label><input type="radio" name="course" value="z">全日</label>
+                    <label><input type="radio" name="course" value="t">定時</label>
+                </div>
+                <div class="grade">
+                    <p>学年</p>
+                    <label><input type="radio" name="grade" value="1">1年</label>
+                    <label><input type="radio" name="grade" value="2">2年</label>
+                    <label><input type="radio" name="grade" value="3">3年</label>
+                    <label><input type="radio" name="grade" value="4">4年</label>
+                    <!-- <label><input type="radio" name="grade" value="0">卒</label> -->
+                </div>
+                <div class="department">
+                    <p>学科</p>
+                    <label><input type="radio" name="department" value="a">A科</label>
+                    <label><input type="radio" name="department" value="m">M科</label>
+                    <label><input type="radio" name="department" value="i">I科</label>
+                    <label><input type="radio" name="department" value="g">G科</label>
+                    <label><input type="radio" name="department" value="d">D科</label>
+                </div>
+            </div>
         </div>
-        <div class="row">
-            <div class="addTextbox mb-3"><button type="button" class="addTextbox-btn btn btn-outline-primary" id="AddTextboxBtn">テキストボックスを追加</button></div>
+        <div id="result"></div>
+        <div class="controller">
+            <div class="tools__list">
+                <div class="row colors">
+                    <div class="color"><input type="color" id="ColorPicker" value="#00ff00"><label for="ColorPicker">文字色</label></div>
+                    <div class="bgColor"><input type="color" id="BgColorPicker" value="#ffffff"><label for="BgColorPicker">背景色</label></div>
+                    <div class="bgTransparent form-check form-switch"><input type="checkbox" role="switch" class="form-check-input" id="BgTransparent" checked="checked"><label for="BgTransparent">背景色なし</label></div>
+                </div>
+                <div class="row">
+                    <div class="addTextbox mb-2"><button type="button" class="addTextbox-btn btn btn-outline-primary" id="AddTextboxBtn">テキストボックスを追加</button></div>
+                </div>
+                <div class="row">
+                    <div class="upload input-group mb-2"><label class="input-group-text" for="file">画像追加</label><input class="form-control" type="file" name="file" id="file"></div>
+                </div>
+                <div class="row">
+                    <div class="draw mb-2 col-4 form-check form-switch"><input type="checkbox" role="switch" class="form-check-input" name="drawMode-check" id="DrawMode"><label for="DrawMode">落描きする</label></div>
+                    <div class="penWidth mb-2 col-8 row"><input type="range" class="form-range col" id="PenWidth" value="1" min="1" max="50"><label for="PenWidth" class="col">ペンの太さ<span id="PenWidthValue">1px</span></label></div>            
+                </div>
+                <div class="button__wrapper">
+                    <div class="row">
+                        <div class="delete mb-2"><button type="button" id="Delete" class="btn btn-secondary">選択したやつを消す</button></div>
+                    </div>
+                    <div class="row">
+                        <div class="download mb-2"><button type="button" id="Download" class="btn btn-primary">画像をダウンロード</button></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="row">
-            <div class="upload input-group mb-3"><label class="input-group-text" for="file">画像追加</label><input class="form-control" type="file" name="file" id="file"></div>
-        </div>
-        <div class="row">
-            <div class="draw mb-3 col-4 form-check form-switch"><input type="checkbox" role="switch" class="form-check-input" name="drawMode-check" id="DrawMode"><label for="DrawMode">落描きする</label></div>
-            <div class="penWidth mb-3 col-8 row"><input type="range" class="form-range col" id="PenWidth" value="1" min="1" max="50"><label for="PenWidth" class="col">ペンの太さ<span id="PenWidthValue">1px</span></label></div>            
-        </div>
-        <div class="row">
-            <div class="delete mb-3"><button type="button" id="Delete" class="btn btn-secondary">選択したやつを消す</button></div>
-        </div>
-        <div class="row">
-            <div class="download mb-3"><button type="button" id="Download" class="btn btn-primary">画像をダウンロード</button></div>
-        </div>
-        <footer class="row">
-            <small class="fs-6 text-center">created:<a href="https://twitter.com/UmeBC" >@umebc</a></small>
-        </footer>
-    </div>
-    <div id="result"></div>
+    </main>
+    <footer class="row">
+        <small class="">created:<a href="https://twitter.com/UmeBC" >@umebc</a></small>
+    </footer>
     <script>
         //画面サイズの幅上限
         const widthMax = 640;
+        // const widthMax = document.documentElement.clientWidth;
+        const clientWidth = document.documentElement.clientWidth;
+        //tryangle def size
+        const tryangleWidth = 28;
         //fabricをロード
-        const canvas = new fabric.Canvas('Canvas');
+        let canvas = new fabric.Canvas('Canvas');
         //初期値：選択可能
         canvas.selection = true;
         //初期値：落描き無効
@@ -62,6 +233,22 @@
         //背景色カラーピッカーを取得
         let bgColorPicler = document.getElementById('BgColorPicker');
 
+        //インフォメーションカーソル
+        let t_course;
+        let t_grade;
+        let t_department;
+
+        let cvs = document.getElementById('Canvas');
+        let ratio = 1;
+        window.addEventListener('load', ()=>{
+            cvs = document.getElementById('Canvas');
+            ratio = parseInt(canvas.width / widthMax * 100 + .5) / 100;
+
+            t_course = createTryangle(0, 0, visible = false);
+            t_grade = createTryangle(0, 0, visible = false);
+            t_department = createTryangle(0, 0, visible = false);
+        });
+    
         //画像を読み込む
         document.getElementById('file').addEventListener("change", function (e) {
             let file = e.target.files[0];
@@ -78,15 +265,133 @@
             reader.readAsDataURL(file);
         });
 
-        //背景色を変更したら動的に背景色を有効にする
-        bgColorPicler.onchange = (e) => {
-            bgTransparent.checked = false;
+        //図形追加：円
+        const createCircle = (x, y, color, back, strk = 3, radi = 10) => {
+            let circle = new fabric.Circle({
+                left: x,         //左上角相当部分（赤点）の左
+                top: y,          //左上角相当部分（赤点）の上
+                radius: radi,       //半径
+                strokeWidth: strk,   //線の太さ
+                stroke: color,   //線の色
+                fill: back,//塗潰しの色
+                angle: 0          //角度
+            });
+            canvas.add(circle);
         }
+        //図形追加：三角
+        const createTryangle = (x, y, color = 'white', back = 'white', width = tryangleWidth * ratio, height = tryangleWidth * .75 * ratio, visible = true) => {
+            let rect = new fabric.Triangle({
+                left: x,         //左上角相当部分（赤点）の左
+                top: y,          //左上角相当部分（赤点）の上
+                width: width,        //幅
+                height: height,       //高さ
+                strokeWidth: 1,   //線の太さ
+                stroke: color,   //線の色
+                fill: back,//塗潰しの色
+                angle: 90,          //角度
+                visible: visible,
+            })
+            canvas.add(rect);
+            return rect;
+        }
+
+        //ユーザーインフォ
+        //課程
+        document.getElementsByName('course').forEach(course => {
+            course.addEventListener('change', event => {
+                let val = event.currentTarget.value;
+                switch(val) {
+                    case 'z':
+                        t_course.set({left:cvs.offsetWidth * .383, top:cvs.offsetHeight * .155});
+                        break;
+                    case 't':
+                        t_course.set({left:cvs.offsetWidth * .475, top:cvs.offsetHeight * .155});
+                        break;
+                    default:
+                    }
+                t_course.set({visible: true});
+                canvas.renderAll();
+            });
+        });
+        //学年
+        document.getElementsByName('grade').forEach(grade => {
+            grade.addEventListener('change', event => {
+                let val = Number(event.currentTarget.value);
+                switch(val) {
+                    case 1:
+                        t_grade.set({left:cvs.offsetWidth * .383, top:cvs.offsetHeight * .192});
+                        break;
+                    case 2:
+                        t_grade.set({left:cvs.offsetWidth * .475, top:cvs.offsetHeight * .192});
+                        break;
+                    case 3:
+                        t_grade.set({left:cvs.offsetWidth * .567, top:cvs.offsetHeight * .192});
+                        break;
+                    case 4:
+                        t_grade.set({left:cvs.offsetWidth * .651, top:cvs.offsetHeight * .192});
+                        break;
+                    default:
+                    }
+                t_grade.set({visible: true});
+                canvas.renderAll();
+            });
+        });
+        //学科
+        document.getElementsByName('department').forEach(department => {
+            department.addEventListener('change', event => {
+                let val = event.currentTarget.value;
+                switch(val) {
+                    case 'a':
+                        t_department.set({left:cvs.offsetWidth * .114, top:cvs.offsetHeight * .455});
+                        break;
+                    case 'd':
+                        t_department.set({left:cvs.offsetWidth * .283, top:cvs.offsetHeight * .455});
+                        break;
+                    case 'g':
+                        t_department.set({left:cvs.offsetWidth * .466, top:cvs.offsetHeight * .455});
+                        break;
+                    case 'i':
+                        t_department.set({left:cvs.offsetWidth * .655, top:cvs.offsetHeight * .455});
+                        break;
+                    case 'm':
+                        t_department.set({left:cvs.offsetWidth * .823, top:cvs.offsetHeight * .455});
+                        break;
+                    default:
+                    }
+                t_department.set({visible: true});
+                canvas.renderAll();
+            });
+        });
+
+        //背景色を変更したら動的に背景色を有効にする
+        bgColorPicler.onchange = () => bgTransparent.checked = false;
+
+        document.body.addEventListener('click', ()=>{
+            if(canvas.getActiveObject()){
+                canvas.getActiveObject().set("fontFamily", "DotGothic16");
+                // canvas.font = "DotGothic16";
+                canvas.renderAll();
+            }
+            let fabricObjs = canvas.getObjects();
+            fabricObjs.forEach(fObj => {
+                fObj.set("fontFamily", "DotGothic16");
+                // fObj.font = "DotGothic16";
+            });
+            canvas.renderAll();
+        });
 
         //文字を追加できる
         function createTextBox(text){
             let bg = bgTransparent.checked ? null : bgColorPicler.value;
-            let textbox = new fabric.Textbox(text,{fill: colorPicker.value, backgroundColor: bg, textAlign: "center"});
+            let textbox = new fabric.Textbox(text,{
+                                                    originX: "center",
+                                                    originY: "center",
+                                                    scaleX: 0.9,
+                                                    fill: colorPicker.value,
+                                                    backgroundColor: bg,
+                                                    textAlign: "center",
+                                                    fontFamily: "DotGothic16",
+                                                });
             canvas.add(textbox);
             canvas.centerObject(textbox);
         }
@@ -141,7 +446,7 @@
 
         //背景設定
         (() => {
-            fabric.Image.fromURL('sheet2022.PNG', function(bgImg) {
+            fabric.Image.fromURL('kogei_sheet_2024.png', function(bgImg) {
                 bgImg.scaleToWidth(canvas.width);
                 //bgImg.scaleToHeight(canvas.height);
                 canvas.setBackgroundImage(bgImg, canvas.renderAll.bind(canvas), {
@@ -149,6 +454,16 @@
                 });
 	        });
         })();
+
+        //.tools開閉
+        let opener = document.querySelector(".sidemenu");
+        opener.addEventListener('click', () => {
+            opener.classList.toggle('open');
+        });
+        let userinfo = document.querySelector(".userinfo");
+        userinfo.addEventListener('click', event => {
+            event.stopPropagation();
+        });
     </script>
 </body>
 </html>
